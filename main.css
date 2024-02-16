@@ -1,0 +1,109 @@
+* {
+  font-family: "Protest Riot";
+  color: white;
+  text-shadow: 1px 1px 1px black;
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
+
+body {
+  background-color: #6e54a3;
+  /* overflow: hidden; */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  border: 1px solid rgb(255, 255, 255);
+}
+
+td,
+th {
+  border: 1px solid rgb(255, 255, 255);
+  text-align: center;
+  min-width: 20px;
+  max-width: calc(80% / 8);
+  height: 60px;
+  padding: 3px;
+}
+
+tr {
+  background-color: #10035a;
+}
+
+.header {
+  background-color: #3d1649;
+}
+
+th,
+tr:last-child td {
+  height: 30px;
+  background-color: rgb(25, 0, 255);
+  letter-spacing: 2px;
+}
+
+th {
+  border: none;
+  font-size: 30px;
+  letter-spacing: 10px;
+}
+
+td:first-child {
+  background-color: rgb(207, 138, 10);
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  text-align: center;
+}
+
+input:focus {
+  outline: none;
+}
+
+.add,
+.reset {
+  background: #3d1649;
+  position: absolute;
+  top: 85%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 30px;
+  border: 0.5px solid rgba(255, 255, 255, 0.637);
+  transition: 0.3s background-color;
+}
+
+.add:hover,
+.reset:hover {
+  background: #1a002567;
+}
+
+.add {
+  left: 35%;
+}
+
+.reset {
+  left: 70%;
+}
+
+footer {
+  color: rgb(255, 255, 255);
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}

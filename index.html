@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skrew</title>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <table id="myTable">
+      <th colspan="100%">SKREW</th>
+      <tr class="header">
+        <td style="background-color: rgb(10, 10, 141)">Names</td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+      </tr>
+      <tr>
+        <td>First<br />Round</td>
+        <td><input type="number" class="col1" /></td>
+        <td><input type="number" class="col2" /></td>
+        <td><input type="number" class="col3" /></td>
+        <td><input type="number" class="col4" /></td>
+      </tr>
+      <tr>
+        <td>Second<br />Round</td>
+        <td><input type="number" class="col1" /></td>
+        <td><input type="number" class="col2" /></td>
+        <td><input type="number" class="col3" /></td>
+        <td><input type="number" class="col4" /></td>
+      </tr>
+      <tr>
+        <td>Third<br />Round</td>
+        <td><input type="number" class="col1" /></td>
+        <td><input type="number" class="col2" /></td>
+        <td><input type="number" class="col3" /></td>
+        <td><input type="number" class="col4" /></td>
+      </tr>
+      <tr>
+        <td>Fourth<br />Round</td>
+        <td><input type="number" class="col1" /></td>
+        <td><input type="number" class="col2" /></td>
+        <td><input type="number" class="col3" /></td>
+        <td><input type="number" class="col4" /></td>
+      </tr>
+      <tr>
+        <td>Fifth<br />Round</td>
+        <td><input type="number" class="col1" /></td>
+        <td><input type="number" class="col2" /></td>
+        <td><input type="number" class="col3" /></td>
+        <td><input type="number" class="col4" /></td>
+      </tr>
+      <tr class="foot">
+        <td style="background-color: rgb(10, 10, 141)">SUM</td>
+        <td id="sum1"><input type="number" class="col3" value="0" /></td>
+        <td id="sum2"><input type="number" class="col3" value="0" /></td>
+        <td id="sum3"><input type="number" class="col3" value="0" /></td>
+        <td id="sum4"><input type="number" class="col4" value="0" /></td>
+      </tr>
+    </table>
+    <button class="add">+Player</button>
+    <button class="reset">Reset</button>
+    <footer>&copy; 2024 Thomas.<br />All Rights Reserved.</footer>
+    <script>
+      function calculateSum() {
+        const tableRows = document.querySelectorAll(
+          "#myTable tr:not(:last-child)"
+        );
+        let sums = [0, 0, 0, 0]; // Initialize sum for each column
+        tableRows.forEach((row) => {
+          const inputs = row.querySelectorAll('input[type="number"]');
+          inputs.forEach((input, index) => {
+            sums[index] += parseInt(input.value) || 0; // Add input value to sum (convert to integer, default to 0 if NaN)
+          });
+        });
+
+        // Find the min and max sum values
+        const minSum = Math.min(...sums);
+        const maxSum = Math.max(...sums);
+
+        // Find the indexes of columns with min and max sum
+        const minSumIndexes = sums.reduce((acc, val, index) => {
+          if (val === minSum) acc.push(index);
+          return acc;
+        }, []);
+
+        const maxSumIndexes = sums.reduce((acc, val, index) => {
+          if (val === maxSum) acc.push(index);
+          return acc;
+        }, []);
+
+        // Update sum values in the last row and apply color highlighting
+        const sumCells = document.querySelectorAll('.foot td[id^="sum"]');
+        sumCells.forEach((cell, index) => {
+          const input = cell.querySelector("input");
+          if (input) {
+            input.value = sums[index];
+            if (minSumIndexes.includes(index)) {
+              cell.style.backgroundColor = "green"; // Highlight columns with the least sum
+            } else if (maxSumIndexes.includes(index)) {
+              cell.style.backgroundColor = "red"; // Highlight columns with the highest sum
+            } else {
+              cell.style.backgroundColor = ""; // Reset background color for other columns
+            }
+          } else {
+            const newInput = document.createElement("input");
+            newInput.type = "number";
+            newInput.value = sums[index];
+            newInput.className = "col3";
+            cell.appendChild(newInput);
+          }
+        });
+      }
+
+      // Event listener for input changes
+      document.querySelectorAll('input[type="number"]').forEach((input) => {
+        input.addEventListener("input", calculateSum);
+      });
+
+      document.querySelector(".reset").addEventListener("click", function () {
+        const tableRows = document.querySelectorAll("#myTable tr");
+        tableRows.forEach((row, index) => {
+          if (index !== tableRows.length - 1) {
+            const numberInputs = row.querySelectorAll('input[type="number"]');
+            numberInputs.forEach((input) => (input.value = ""));
+          } else {
+            const numberInputs = row.querySelectorAll('input[type="number"]');
+            numberInputs.forEach((input) => (input.value = "0"));
+          }
+        });
+      });
+
+      document.querySelector(".add").addEventListener("click", function () {
+        const tableRows = document.querySelectorAll(
+          "#myTable tr:not(:first-child)"
+        );
+        tableRows.forEach((row, index) => {
+          const newCell = document.createElement("td");
+          const newInput = document.createElement("input");
+          if (index === tableRows.length - 1) {
+            newInput.type = "number";
+            newInput.value = 0; // Set initial value to zero for the last row
+          } else if (index === 0) {
+            newInput.type = "text"; // If it's the first new row
+          } else {
+            newInput.type = "number";
+          }
+          newInput.addEventListener("input", calculateSum); // Add input listener to new input
+          newCell.appendChild(newInput);
+          row.appendChild(newCell);
+        });
+
+        calculateSum(); // Calculate sum after adding the new inputs
+
+        // Attach event listeners to all input fields
+        document.querySelectorAll('input[type="number"]').forEach((input) => {
+          input.addEventListener("input", calculateSum);
+        });
+      });
+    </script>
+  </body>
+</html>

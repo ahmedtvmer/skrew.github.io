@@ -1,2 +1,2 @@
 # skrew.github.io
-skrew table game
+[skrew table game](https://skreww.netlify.app/)
